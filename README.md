@@ -6,4 +6,5 @@ Users can achieve the statistics of all NBA players and teams. Records can also 
 The featured function of the application is to help users achieve data views in a more intuitive way – users can get the “radar chart” of a player, a team, or a coach that they inquiry. On top of that, users can choose specific perspectives to generate the radar chart they need and do the comparison.
 
 Expected Radar Chart:
+
 ![alt text](https://github.com/hyraymond/web_front_of_nba_database/blob/master/scratch/exp_radar_chart.jpeg)
