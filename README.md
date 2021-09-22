@@ -1,4 +1,9 @@
-# web_front_of_nba_database
+## Proposal -- Web Front of NBA Database
+**Team Member:** Jiarui Liu, Yong Hao
+
+**Choice:** Option a, a web front end
+
+**Description:**
 A Python application that operates the NBA database through a simple web front end. The database is designed to serve NBA fans, scouts, data analysts, etc., to help them compare players and analyze games throughout multiple seasons. 
 
 Users can achieve the statistics of all NBA players and teams. Records can also be inquired by sorting certain domains, such as points, rebounds, assists, etc. The whole design includes seven entities: season, team, player, game, coach, player stats, team stats and contract. Details can be found in E-R diagram.
@@ -8,3 +13,5 @@ The featured function of the application is to help users achieve data views in 
 Expected Radar Chart:
 
 ![alt text](https://github.com/hyraymond/web_front_of_nba_database/blob/master/scratch/exp_radar_chart.jpeg)
+
+**Contigency Plan:** If someone drops in the middle of the project, the other one should work and finish the program alone.
