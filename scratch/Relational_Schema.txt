@@ -1,16 +1,23 @@
 ## Relational Schema
 
-Player (Player_ID, First_Name, Last_Name, Date_Birth, Height, Weight, Jersy, Position, Team_ID NOT NULL,
+Player (Player_ID, First_Name, Last_Name, Date_Birth, Height, Weight, Jersey, Position, Team_ID,
         PK(Player_ID), FK(Team_ID) -> Team)
-Team (Team_ID, Name, Year_Founded, State, City, Arena,
+
+Team (Team_ID, Name, Year_Founded, Payroll, Head_Coach,
       PK(Team_ID))
+
+Arena (Team_ID, Arena_ID NOT NULL, State, City, Capacity, 
+PK(Team_ID, Arena_ID), FK(Team_ID) -> Team)
+
 Career_Stats (Player_ID, PTS, AST, REB, ALL_STAR_NUM,
               FK(Player_ID) -> Player
               ON DELETE CASCADE)
+
 Season_Team_Stats (Year, Team ID, W, L,
-                   PK(Yearm Team_ID), FK(Team_ID) -> Team)
-Game (Year, Game_ID, Home_Team NOT NULL, Home_Team_Score NOT NULL, Home_Team_W/L NOT NULL,
-      Away_Team NOT NULL, Away_Team_Score NOT NULL, Away_Team_W/L NOT NULL,
+                   PK(Year, Team_ID), FK(Team_ID) -> Team)
+
+Game (Year, Game_ID, Home_Team NOT NULL, Home_Team_Score NOT NULL, Home_Team_W/L NOT NULL, Away_Team NOT NULL, Away_Team_Score NOT NULL, Away_Team_W/L NOT NULL,
       PK(Game_ID), FK(Home_Team, Away_Team) -> Team)
+
 Single_Game_Player_Stats (Game_ID, Player_ID NOT NULL, MIN, PTS, AST, REB, 
                           PK(Game_ID, Player_ID), FK(Game_ID) -> Game, FK(Player_ID) -> Player)
