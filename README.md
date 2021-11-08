@@ -14,4 +14,7 @@ Expected Radar Chart:
 
 ![alt text](https://github.com/hyraymond/web_front_of_nba_database/blob/master/scratch/exp_radar_chart.jpeg)
 
-**Contigency Plan:** If someone drops in the middle of the project, the other one should work and finish the program alone.
+**Data Source:**
+We plan to combine these two Kaggle dataset and form our own database.
+https://www.kaggle.com/wyattowalsh/basketball
+https://www.kaggle.com/nathanlauga/nba-games?select=ranking.csv
