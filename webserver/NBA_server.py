@@ -203,6 +203,8 @@ def player_profile():
   first_name = request.form['fname']
   cursor_player = g.conn.execute(text("SELECT * FROM player WHERE last_name = :lname and first_name = :fname"),\
     {"lname":last_name, "fname":first_name})
+  cursor_player_avg = g.conn.execute(text("SELECT AVG(height), AVG(weight), AVG(CAREER_PTS), AVG(CAREER_AST), AVG(CAREER_REB) FROM Player"))
+  cursor_player_max = g.conn.execute(text("SELECT MAX(height), MAX(weight), MAX(CAREER_PTS), MAX(CAREER_AST), MAX(CAREER_REB) FROM Player"))
   player_fname = ''
   player_lname = ''
   player_dob = ''
@@ -227,9 +229,24 @@ def player_profile():
       player_reb=float(result[11])
       player_star=result[12]
   cursor_player.close()
+  for result in cursor_player_avg:
+    avg_height = float(result[0])
+    avg_weight = float(result[1])
+    avg_pts = float(result[2])
+    avg_ast = float(result[3])
+    avg_reb = float(result[4])
+  cursor_player_avg.close()
+  for result in cursor_player_max:
+    max_height = float(result[0])
+    max_weight = float(result[1])
+    max_pts = float(result[2])
+    max_ast = float(result[3])
+    max_reb = float(result[4])
+  cursor_player_max.close()
   player_profile = dict(player_fname = player_fname,player_lname = player_lname, player_dob = player_dob, player_height = player_height, player_weight = player_weight,\
     player_jersey = player_jersey, player_pos = player_pos, player_pts = player_pts, player_ast = player_ast,\
-      player_reb = player_reb,player_star = player_star)
+      player_reb = player_reb,player_star = player_star, avg_height=avg_height, avg_weight=avg_weight, avg_pts=avg_pts, avg_ast = avg_ast, avg_reb = avg_reb,\
+        max_height = max_height, max_weight= max_weight, max_pts=max_pts, max_ast=max_ast, max_reb= max_reb)
   return render_template("player.html", **player_profile)
 
 @app.route('/game', methods = ['GET'])

@@ -60,74 +60,146 @@
             <th style="width:10%;">Height</th>
             <th style="width:10%;">Weight</th>
             <th style="width:10%;">Jersey</th>
-            <th style="width:15%;">Position</th>
+            <th style="width:10%;">Position</th>
             <th style="width:5%;">PTS</th>
             <th style="width:5%;">AST</th>
             <th style="width:5%;">REB</th>
             <th style="width:10%;">All Star Number</th>
         </tr>
         <tr>
-        <td>{{player_fname}} {{player_lname}}</td>
+        <td id="name">{{player_fname}} {{player_lname}}</td>
         <td>{{player_dob}}</td>
-        <td>{{player_height}}</td>
-        <td>{{player_weight}}</td>
+        <td id="height">{{player_height}}</td>
+        <td id="weight">{{player_weight}}</td>
         <td>{{player_jersey}}</td>
         <td>{{player_pos}}</td>
-        <td>{{player_pts}}</td>
-        <td>{{player_ast}}</td>
-        <td>{{player_reb}}</td>
+        <td id="pts">{{player_pts}}</td>
+        <td id="ast">{{player_ast}}</td>
+        <td id="reb">{{player_reb}}</td>
         <td>{{player_star}}</td>
+        
+        <div id="avg_height" style="display: none;">{{avg_height}}</div>
+        <p id="avg_weight" style="display: none;">{{avg_weight}}</p>
+        <p id="avg_pts" style="display: none;">{{avg_pts}}</p>
+        <p id="avg_ast" style="display: none;">{{avg_ast}}</p>
+        <p id="avg_reb" style="display: none;">{{avg_reb}}</p>
+        <div id="max_height" style="display: none;">{{max_height}}</div>
+        <p id="max_weight" style="display: none;">{{max_weight}}</p>
+        <p id="max_pts" style="display: none;">{{max_pts}}</p>
+        <p id="max_ast" style="display: none;">{{max_ast}}</p>
+        <p id="max_reb" style="display: none;">{{max_reb}}</p>
+
         </tr>
-        <!-- <tr>
-        <td>Berglunds snabbkop</td>
-        <td>Sweden</td>
-        </tr>
-        <tr>
-        <td>Island Trading</td>
-        <td>UK</td>
-        </tr>
-        <tr>
-        <td>Koniglich Essen</td>
-        <td>Germany</td>
-        </tr>
-        <tr>
-        <td>Laughing Bacchus Winecellars</td>
-        <td>Canada</td>
-        </tr>
-        <tr>
-        <td>Magazzini Alimentari Riuniti</td>
-        <td>Italy</td>
-        </tr>
-        <tr>
-        <td>North/South</td>
-        <td>UK</td>
-        </tr>
-        <tr>
-        <td>Paris specialites</td>
-        <td>France</td>
-        </tr> -->
     </table>
   </form>
+  <br><br>
+  <br><br>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <center><canvas id="myChart" style="width:100%;max-width:700px"></canvas></center>
 
 <script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
+var name = document.getElementById("name").innerHTML = "{{player_fname}} {{player_lname}}"
+var height = parseInt(document.getElementById("height").innerHTML = "{{player_height}}")
+var weight = parseInt(document.getElementById("weight").innerHTML = "{{player_weight}}")
+var pts = parseFloat(document.getElementById("pts").innerHTML = "{{player_pts}}")
+var ast = parseFloat(document.getElementById("ast").innerHTML = "{{player_ast}}")
+var reb = parseFloat(document.getElementById("reb").innerHTML = "{{player_reb}}")
+var avg_height = parseInt(document.getElementById("avg_height").innerHTML = "{{avg_height}}")
+var avg_weight = parseInt(document.getElementById("avg_weight").innerHTML = "{{avg_weight}}")
+var avg_pts = parseFloat(document.getElementById("avg_pts").innerHTML = "{{avg_pts}}")
+var avg_ast = parseFloat(document.getElementById("avg_ast").innerHTML = "{{avg_ast}}")
+var avg_reb = parseFloat(document.getElementById("avg_reb").innerHTML = "{{avg_reb}}")
+var max_height = parseInt(document.getElementById("max_height").innerHTML = "{{max_height}}")
+var max_weight = parseInt(document.getElementById("max_weight").innerHTML = "{{max_weight}}")
+var max_pts = parseFloat(document.getElementById("max_pts").innerHTML = "{{max_pts}}")
+var max_ast = parseFloat(document.getElementById("max_ast").innerHTML = "{{max_ast}}")
+var max_reb = parseFloat(document.getElementById("max_reb").innerHTML = "{{max_reb}}")
+
+var VERS = (pts+ast+reb)/(max_pts+max_ast+max_reb)*100;
+var POW = (height+weight)/(max_height+max_weight)*100;
+var avg_VERS = (avg_pts+avg_ast+avg_reb)/(max_pts+max_ast+max_reb)*100;
+var avg_POW = (avg_height+avg_weight)/(max_height+max_weight)*100;
+// function myFunction() {
+//   var input, filter, table, tr, td, i, txtValue;
+//   input = document.getElementById("myInput");
+//   filter = input.value.toUpperCase();
+//   table = document.getElementById("myTable");
+//   tr = table.getElementsByTagName("tr");
+//   for (i = 0; i < tr.length; i++) {
+//     td = tr[i].getElementsByTagName("td")[0];
+//     if (td) {
+//       txtValue = td.textContent || td.innerText;
+//       if (txtValue.toUpperCase().indexOf(filter) > -1) {
+//         tr[i].style.display = "";
+//       } else {
+//         tr[i].style.display = "none";
+//       }
+//     }       
+//   }
+// }
+
+// var myChart = new Chart("myChart", {
+//   type: "scatter",
+//   data: {},
+//   options: {}
+// });
+const data = {
+  labels: [
+    'PTS',
+    'AST',
+    'REB',
+    'VERS',
+    'POW'
+  ],
+  datasets: [{
+    label: name,
+    data: [(pts/max_pts * 100).toFixed(), (ast/max_ast*100).toFixed(), (reb/max_reb * 100).toFixed(), (VERS).toFixed(), (POW).toFixed()],
+    fill: true,
+    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    borderColor: 'rgb(255, 99, 132)',
+    pointBackgroundColor: 'rgb(255, 99, 132)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgb(255, 99, 132)'
+  },
+  {
+    label: 'Average among the League',
+    data: [(avg_pts/max_pts*100).toFixed(1), (avg_ast/max_ast*100).toFixed(1), (avg_reb/max_reb*100).toFixed(1), avg_VERS.toFixed(1), avg_POW.toFixed(1)],
+    fill: true,
+    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+    borderColor: 'rgb(54, 162, 235)',
+    pointBackgroundColor: 'rgb(54, 162, 235)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgb(54, 162, 235)'
   }
-}
+]
+};
+
+var myChart = new Chart("myChart", {
+  type: 'radar',
+  data: data,
+  options: {
+    scale: {
+          ticks: {
+              beginAtZero: true,
+              max: 100,
+              min: 0
+              // stepSize: 1
+          }
+      },
+    elements: {
+      line: {
+        borderWidth: 3
+      }
+    }
+  },
+});
+// console.log(name)
+// if(name == null){
+//   myChart.options.legend.display = false;
+// }
+
 </script>
 
 </body>
