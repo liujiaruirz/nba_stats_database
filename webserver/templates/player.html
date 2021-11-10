@@ -56,9 +56,9 @@
     <table id="myTable">
         <tr class="header">
             <th style="width:15%;">Name</th>
-            <th style="width:15%;">Date of Birth</th>
-            <th style="width:10%;">Height</th>
-            <th style="width:10%;">Weight</th>
+            <th style="width:10%;">Date of Birth</th>
+            <th style="width:10%;">Height (in inches)</th>
+            <th style="width:10%;">Weight (in lbs.)</th>
             <th style="width:10%;">Jersey</th>
             <th style="width:10%;">Position</th>
             <th style="width:5%;">PTS</th>
@@ -115,10 +115,13 @@ var max_pts = parseFloat(document.getElementById("max_pts").innerHTML = "{{max_p
 var max_ast = parseFloat(document.getElementById("max_ast").innerHTML = "{{max_ast}}")
 var max_reb = parseFloat(document.getElementById("max_reb").innerHTML = "{{max_reb}}")
 
-var VERS = (pts+ast+reb)/(max_pts+max_ast+max_reb)*100;
-var POW = (height+weight)/(max_height+max_weight)*100;
-var avg_VERS = (avg_pts+avg_ast+avg_reb)/(max_pts+max_ast+max_reb)*100;
-var avg_POW = (avg_height+avg_weight)/(max_height+max_weight)*100;
+var VERS = (pts/max_pts+ast/max_ast+reb/max_reb)*100/3;
+var POW = (height/max_height+weight/max_weight)*100/2;
+var avg_VERS = (avg_pts/max_pts+avg_ast/max_ast+avg_reb/max_reb)*100/3;
+var avg_POW = (avg_height/max_height+avg_weight/max_weight)*100/2;
+
+console.log(max_reb)
+console.log(max_ast)
 // function myFunction() {
 //   var input, filter, table, tr, td, i, txtValue;
 //   input = document.getElementById("myInput");
