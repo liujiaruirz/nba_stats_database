@@ -59,7 +59,7 @@ body {font-family: Arial;}
   <h3>NBA Teams</h3>
   <div>
     {% for n in Tnames %}
-    <p><a href={{n}}>{{n}}</a></p>
+    <p><a href=/team/{{n}}>{{n}}</a></p>
     {% endfor %}
   </div>
 </div>
@@ -70,7 +70,7 @@ body {font-family: Arial;}
 </div> -->
 
 <div id="Players" class="tabcontent">
-<p><a href="player">Go to the player table</a></p>
+<p><a href="player">Go to the Player search page</a></p>
   <!-- <h3>NBA Players</h3>
   <p>Input the player's name you want to learn about:</p>
   <form method = 'POST' action = "/player">
@@ -96,7 +96,7 @@ body {font-family: Arial;}
 </div>
 
 <div id="Games" class="tabcontent">
-<p><a href="game">Go to the game table</a></p>
+<p><a href="game">Go to the Game search page</a></p>
   <!-- <h3>Games</h3>
   <p>Input the game details you want to query:</p>
   <form>

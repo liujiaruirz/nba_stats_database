@@ -41,8 +41,8 @@
 </head>
 <body>
 
-<h2>NBA Games since Season 1946-47</h2>
-  <p>Input the game details you want to learn about:</p>
+<h2>NBA Games since Season 1946</h2>
+  <p>Input the games you want to learn about:</p>
   <form method = 'POST' action = "/game">
     <label for="year">Game season:</label>
     <input type="integer" id="year" name="year"><br><br>
@@ -50,21 +50,21 @@
     <input type="text" id="hteam" name="hteam"><br><br>
     <label for="ateam">Away Team:</label>
     <input type="text" id="ateam" name="ateam"><br><br>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Search">
     <br><br>
     <table id="myTable">
         <tr class="header">
-            <th style="width:20%;">Game ID</th>
+            <th style="width:10%;">Game ID</th>
             <th style="width:10%;">Season</th>
-            <th style="width:15%;">Home Team</th>
-            <th style="width:15%;">Away Team</th>
-            <th style="width:15%;">Winner</th>
+            <th style="width:10%;">Home Team</th>
+            <th style="width:10%;">Away Team</th>
+            <th style="width:10%;">Winner</th>
             <th style="width:10%;">Home Team Score</th>
             <th style="width:10%;">Away Team Score</th>
         </tr>
         {% for n in one_game%}
         <tr>
-        <td><a href = {{n[0]}}>{{n[0]}}</a></td>
+        <td><a href = /game/{{n[0]}}>{{n[0]}}</a></td>
         <td>{{n[1]}}</td>
         <td>{{n[2]}}</td>
         <td>{{n[3]}}</td>

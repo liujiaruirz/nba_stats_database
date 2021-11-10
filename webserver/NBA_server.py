@@ -267,7 +267,6 @@ def game_profile():
     home_team_score = result[5]
     away_team_score = result[6]
     one_game.append([Game_ID, season, hteam, ateam, winner, home_team_score, away_team_score])
-  print(one_game)
   cursor_game.close()
   # game_profile = dict(Game_ID = Game_ID, winner = winner, season = season, hteam = hteam, ateam = ateam, home_team_score = home_team_score, away_team_score = away_team_score)
   game_profile = dict(one_game = one_game)
