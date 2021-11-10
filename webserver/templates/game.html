@@ -41,43 +41,38 @@
 </head>
 <body>
 
-<h2>NBA Players</h2>
-  <p>Input the player's name you want to learn about:</p>
-  <form method = 'POST' action = "/player">
-    <label for="fname">First name:</label>
-    <input type="text" id="fname" name="fname"><br><br>
-    <label for="lname">Last name:</label>
-    <input type="text" id="lname" name="lname"><br><br>
-    <input type="submit" value="Search">
-    {% if player_fname == '' or player_lname == '' %}
-    <p>No player found! Please try again.</p>
-    {% endif %}
+<h2>NBA Games since Season 1946-47</h2>
+  <p>Input the game details you want to learn about:</p>
+  <form method = 'POST' action = "/game">
+    <label for="year">Game season:</label>
+    <input type="integer" id="year" name="year"><br><br>
+    <label for="hteam">Home Team:</label>
+    <input type="text" id="hteam" name="hteam"><br><br>
+    <label for="ateam">Away Team:</label>
+    <input type="text" id="ateam" name="ateam"><br><br>
+    <input type="submit" value="Submit">
     <br><br>
     <table id="myTable">
         <tr class="header">
-            <th style="width:15%;">Name</th>
-            <th style="width:15%;">Date of Birth</th>
-            <th style="width:10%;">Height</th>
-            <th style="width:10%;">Weight</th>
-            <th style="width:10%;">Jersey</th>
-            <th style="width:15%;">Position</th>
-            <th style="width:5%;">PTS</th>
-            <th style="width:5%;">AST</th>
-            <th style="width:5%;">REB</th>
-            <th style="width:10%;">All Star Number</th>
+            <th style="width:20%;">Game ID</th>
+            <th style="width:10%;">Season</th>
+            <th style="width:15%;">Home Team</th>
+            <th style="width:15%;">Away Team</th>
+            <th style="width:15%;">Winner</th>
+            <th style="width:10%;">Home Team Score</th>
+            <th style="width:10%;">Away Team Score</th>
         </tr>
+        {% for n in one_game%}
         <tr>
-        <td>{{player_fname}} {{player_lname}}</td>
-        <td>{{player_dob}}</td>
-        <td>{{player_height}}</td>
-        <td>{{player_weight}}</td>
-        <td>{{player_jersey}}</td>
-        <td>{{player_pos}}</td>
-        <td>{{player_pts}}</td>
-        <td>{{player_ast}}</td>
-        <td>{{player_reb}}</td>
-        <td>{{player_star}}</td>
+        <td><a href = {{n[0]}}>{{n[0]}}</a></td>
+        <td>{{n[1]}}</td>
+        <td>{{n[2]}}</td>
+        <td>{{n[3]}}</td>
+        <td>{{n[4]}}</td>
+        <td>{{n[5]}}</td>
+        <td>{{n[6]}}</td>
         </tr>
+        {% endfor %}
         <!-- <tr>
         <td>Berglunds snabbkop</td>
         <td>Sweden</td>
@@ -110,6 +105,7 @@
   </form>
 
 <script>
+
 function myFunction() {
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("myInput");

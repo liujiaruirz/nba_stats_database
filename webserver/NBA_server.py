@@ -232,19 +232,46 @@ def player_profile():
       player_reb = player_reb,player_star = player_star)
   return render_template("player.html", **player_profile)
 
+@app.route('/game', methods = ['GET'])
+def game():
+  return render_template("Game.html")
 
-# Example of adding new data to the database
-@app.route('/add', methods=['POST'])
-def add():
-  name = request.form['name']
-  g.conn.execute('INSERT INTO test VALUES (NULL, ?)', name)
-  return redirect('/')
+@app.route('/game', methods = ['POST'])
+def game_profile():
+  year = request.form['year']
+  hteam = request.form['hteam']
+  ateam = request.form['ateam']
+  cursor_game = g.conn.execute(text("SELECT Game_ID, Home_Team_Win, year, T1.name as hteam, T2.name as ateam, home_team_score, \
+                                        away_team_score FROM Game G, team T1, team T2  \
+                                        WHERE G.home_team_ID = T1.team_ID and G.away_team_ID = T2.team_ID and T1.name = :hteam\
+                                        and T2.name = :ateam and year = :year"),\
+    {"year":year, "hteam":hteam, "ateam":ateam})
+  one_game = []
+  # Game_ID = []
+  # winner = []
+  # season = []
+  # hteam = []
+  # ateam = []
+  # home_team_score = []
+  # away_team_score = []
 
-
-@app.route('/login')
-def login():
-    abort(401)
-    this_is_never_executed()
+  for result in cursor_game:
+    Game_ID = result[0]
+    hteam = result[3]
+    ateam = result[4]
+    if result[1]:
+      winner = hteam
+    else:
+      winner = ateam
+    season = result[2]
+    home_team_score = result[5]
+    away_team_score = result[6]
+    one_game.append([Game_ID, season, hteam, ateam, winner, home_team_score, away_team_score])
+  print(one_game)
+  cursor_game.close()
+  # game_profile = dict(Game_ID = Game_ID, winner = winner, season = season, hteam = hteam, ateam = ateam, home_team_score = home_team_score, away_team_score = away_team_score)
+  game_profile = dict(one_game = one_game)
+  return render_template("game.html", **game_profile)
 
 
 if __name__ == "__main__":
