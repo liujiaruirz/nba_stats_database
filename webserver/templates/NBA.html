@@ -46,40 +46,69 @@ body {font-family: Arial;}
 <body>
 
 <h2>NBA database</h2>
-<p>Click on the buttons inside the tabbed menu:</p>
+<p>Select the field of any NBA data you want to query:</p>
 
 <div class="tab">
   <button class="tablinks" onclick="openDB(event, 'Teams')">Teams</button>
-  <button class="tablinks" onclick="openDB(event, 'Arenas')">Arenas</button>
-  <button class="tablinks" onclick="openDB(event, 'Games')">Games</button>
+  <!-- <button class="tablinks" onclick="openDB(event, 'Arenas')">Arenas</button> -->
   <button class="tablinks" onclick="openDB(event, 'Players')">Players</button>
+  <button class="tablinks" onclick="openDB(event, 'Games')">Games</button>
 </div>
 
 <div id="Teams" class="tabcontent">
-  <h3>Teams</h3>
-  <div>{{data}}</div>
-
+  <h3>NBA Teams</h3>
   <div>
-    {% for n in data %}
-    <div>{{n}}</div>
+    {% for n in Tnames %}
+    <p><a href={{n}}>{{n}}</a></p>
     {% endfor %}
   </div>
 </div>
 
-<div id="Arenas" class="tabcontent">
+<!-- <div id="Arenas" class="tabcontent">
   <h3>Arenas</h3>
   <p>Paris is the capital of France.</p> 
+</div> -->
+
+<div id="Players" class="tabcontent">
+<p><a href="player">Go to the player table</a></p>
+  <!-- <h3>NBA Players</h3>
+  <p>Input the player's name you want to learn about:</p>
+  <form method = 'POST' action = "/player">
+    <label for="fname">First name:</label>
+    <input type="text" id="fname" name="fname"><br><br>
+    <label for="lname">Last name:</label>
+    <input type="text" id="lname" name="lname"><br><br>
+    <input type="submit" value="Search">
+
+    <p>{{player_fname}} {{player_lname}} profile:</p>
+    <div>Date of Birth: {{player_dob}}</div>
+    <div>Height: {{player_height}}</div>
+    <div>Weight: {{player_weight}}</div>
+    <div>Jersey: {{player_jersey}}</div>
+    <div>Position: {{player_pos}}</div>
+    <p>Career Stats:</p>
+    <div>PTS: {{player_pts}}</div>
+    <div>AST: {{player_ast}}</div>
+    <div>REB: {{player_reb}}</div>
+    <div>All Star Number: {{player_star}}</div>
+  </form> -->
+
 </div>
 
 <div id="Games" class="tabcontent">
   <h3>Games</h3>
-  <p>Tokyo is the capital of Japan.</p>
-</div>
+  <p>Input the game details you want to query:</p>
+  <form>
+    <label for="year">Game season:</label>
+    <input type="integer" id="year" name="year"><br><br>
+    <label for="hteam">Home Team:</label>
+    <input type="text" id="hteam" name="hteam"><br><br>
+    <label for="ateam">Away Team:</label>
+    <input type="text" id="ateam" name="ateam"><br><br>
+    <input type="submit" value="Submit">
+  </form>
 
-<div id="Players" class="tabcontent">
-  <h3>Players</h3>
-  <p>Tokyo is the capital of Japan.</p>
-</div>
+
 
 <script>
 function openDB(evt, dbNAME) {

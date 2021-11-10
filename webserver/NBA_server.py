@@ -15,6 +15,7 @@ Read about it online.
 """
 
 import os
+import pandas as pd
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response
@@ -34,7 +35,7 @@ app = Flask(__name__, template_folder=tmpl_dir)
 #
 #     DATABASEURI = "postgresql://biliris:foobar@104.196.152.219/proj1part2"
 #
-DATABASEURI = "postgresql://@35.196.73.133/proj1part2"
+DATABASEURI = "postgresql://yh3290:0989@35.196.73.133/proj1part2"
 
 
 #
@@ -45,12 +46,12 @@ engine = create_engine(DATABASEURI)
 #
 # Example of running queries in your database
 # Note that this will probably not work if you already have a table named 'test' in your database, containing meaningful data. This is only an example showing you how to run queries in your database using SQLAlchemy.
-#
-engine.execute("""CREATE TABLE IF NOT EXISTS test (
-  id serial,
-  name text
-);""")
-engine.execute("""INSERT INTO test(name) VALUES ('grace hopper'), ('alan turing'), ('ada lovelace');""")
+# #
+# engine.execute("""CREATE TABLE IF NOT EXISTS test (
+#   id serial,
+#   name text
+# );""")
+# engine.execute("""INSERT INTO test(name) VALUES ('grace hopper'), ('alan turing'), ('ada lovelace');""")
 
 
 @app.before_request
@@ -113,12 +114,41 @@ def teams():
   #
   # example of a database query
   #
-  cursor = g.conn.execute("SELECT name FROM team")
-  names = []
+  cursor = g.conn.execute("SELECT name, Year_Founded, Head_Coach, State, City, Capacity, arena_name FROM team, arena \
+    WHERE team.Arena_ID = arena.Arena_ID AND team.name != 'Free_Player'")
+  Tnames = []
+  Year_f = []
+  Coach = []
+  State = []
+  City = []
+  Capacity = []
+  Arena_Name = []
   for result in cursor:
-    names.append(result['name'])  # can also be accessed using result[0]
+    Tnames.append(result[0])  # can also be accessed using result[0]
+    Year_f.append(result[1])
+    Coach.append(result[2])
+    State.append(result[3])
+    City.append(result[4])
+    Capacity.append(result[5])
+    Arena_Name.append(result[6])
+
+  # names = pd.DataFrame(names, columns=['Team_ID', 'Tname', 'Year_Founded','Head_Coach','Arena_ID'])
   cursor.close()
 
+  cursor_player = g.conn.execute("SELECT first_name, last_name, date_birth FROM player WHERE first_name IS NOT NULL\
+    AND last_name IS NOT NULL")
+  pname = []
+  for result in cursor_player:
+    pname.append(result[0]+' '+result[1])  # can also be accessed using result[0]
+    # Year_f.append(result[1])
+    # Coach.append(result[2])
+    # State.append(result[3])
+    # City.append(result[4])
+    # Capacity.append(result[5])
+    # Arena_Name.append(result[6])
+
+  # names = pd.DataFrame(names, columns=['Team_ID', 'Tname', 'Year_Founded','Head_Coach','Arena_ID'])
+  cursor_player.close()
   #
   # Flask uses Jinja templates, which is an extension to HTML where you can
   # pass data to a template and dynamically generate HTML based on the data
@@ -145,7 +175,8 @@ def teams():
   #     <div>{{n}}</div>
   #     {% endfor %}
   #
-  context = dict(data = names)
+  context = dict(Tnames = Tnames, Year_f = Year_f, Coach = Coach, \
+    State = State, City = City, Capacity = Capacity, Arena_Name = Arena_Name, pname = pname)
 
 
   #
@@ -162,9 +193,44 @@ def teams():
 # Notice that the function name is another() rather than index()
 # The functions for each app.route need to have different names
 #
-@app.route('/another')
-def another():
-  return render_template("another.html")
+@app.route('/player', methods = ['GET'])
+def player():
+  return render_template("player.html")
+
+@app.route('/player', methods = ['POST'])
+def player_profile():
+  last_name = request.form['lname']
+  first_name = request.form['fname']
+  cursor_player = g.conn.execute(text("SELECT * FROM player WHERE last_name = :lname and first_name = :fname"),\
+    {"lname":last_name, "fname":first_name})
+  player_fname = ''
+  player_lname = ''
+  player_dob = ''
+  player_height = ''
+  player_weight = ''
+  player_jersey = ''
+  player_pos = ''
+  player_pts = ''
+  player_ast = ''
+  player_reb = ''
+  player_star = ''
+  for result in cursor_player:
+      player_fname = str(result[1])
+      player_lname = str(result[2])
+      player_dob=str(result[3])
+      player_height=float(result[4])
+      player_weight=float(result[5])
+      player_jersey=result[6]
+      player_pos=str(result[7])
+      player_pts=float(result[9])
+      player_ast=float(result[10])
+      player_reb=float(result[11])
+      player_star=result[12]
+  cursor_player.close()
+  player_profile = dict(player_fname = player_fname,player_lname = player_lname, player_dob = player_dob, player_height = player_height, player_weight = player_weight,\
+    player_jersey = player_jersey, player_pos = player_pos, player_pts = player_pts, player_ast = player_ast,\
+      player_reb = player_reb,player_star = player_star)
+  return render_template("player.html", **player_profile)
 
 
 # Example of adding new data to the database

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f1f1f1;
+}
+</style>
+</head>
+<body>
+
+<h2>NBA Players</h2>
+  <p>Input the player's name you want to learn about:</p>
+  <form method = 'POST' action = "/player">
+    <label for="fname">First name:</label>
+    <input type="text" id="fname" name="fname"><br><br>
+    <label for="lname">Last name:</label>
+    <input type="text" id="lname" name="lname"><br><br>
+    <input type="submit" value="Search">
+    {% if player_fname == '' or player_lname == '' %}
+    <p>No player found! Please try again.</p>
+    {% endif %}
+    <br><br>
+    <table id="myTable">
+        <tr class="header">
+            <th style="width:15%;">Name</th>
+            <th style="width:15%;">Date of Birth</th>
+            <th style="width:10%;">Height</th>
+            <th style="width:10%;">Weight</th>
+            <th style="width:10%;">Jersey</th>
+            <th style="width:15%;">Position</th>
+            <th style="width:5%;">PTS</th>
+            <th style="width:5%;">AST</th>
+            <th style="width:5%;">REB</th>
+            <th style="width:10%;">All Star Number</th>
+        </tr>
+        <tr>
+        <td>{{player_fname}} {{player_lname}}</td>
+        <td>{{player_dob}}</td>
+        <td>{{player_height}}</td>
+        <td>{{player_weight}}</td>
+        <td>{{player_jersey}}</td>
+        <td>{{player_pos}}</td>
+        <td>{{player_pts}}</td>
+        <td>{{player_ast}}</td>
+        <td>{{player_reb}}</td>
+        <td>{{player_star}}</td>
+        </tr>
+        <!-- <tr>
+        <td>Berglunds snabbkop</td>
+        <td>Sweden</td>
+        </tr>
+        <tr>
+        <td>Island Trading</td>
+        <td>UK</td>
+        </tr>
+        <tr>
+        <td>Koniglich Essen</td>
+        <td>Germany</td>
+        </tr>
+        <tr>
+        <td>Laughing Bacchus Winecellars</td>
+        <td>Canada</td>
+        </tr>
+        <tr>
+        <td>Magazzini Alimentari Riuniti</td>
+        <td>Italy</td>
+        </tr>
+        <tr>
+        <td>North/South</td>
+        <td>UK</td>
+        </tr>
+        <tr>
+        <td>Paris specialites</td>
+        <td>France</td>
+        </tr> -->
+    </table>
+  </form>
+
+<script>
+function null_value() {
+  alert("Hello\nHow are you?");
+}
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+
+</body>
+</html>
