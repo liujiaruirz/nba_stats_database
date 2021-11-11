@@ -208,6 +208,9 @@ def team_info():
   one_player = []
   for result in one_player_cursor:
     one_player.append([result[6], result[7], result[11], result[12], result[14], result[17]])
+  # one_player = list(set(one_player))
+  # one_player.sort(key=lambda x:x[4])
+  one_player = sort_list(one_player)
   team_info = dict(tid = tid, tname = tname, year_founded = year_founded, head_coach = head_coach,\
     aid = aid, state = state, city = city, capacity = capacity, aname = aname, one_player = one_player)
   return render_template("team.html", **team_info)
@@ -353,6 +356,12 @@ def game_profile():
   game_profile = dict(one_game = one_game, query = True, noReturn = noReturn)
   return render_template("game.html", **game_profile)
 
+def sort_list(l):
+  res = []
+  for i in l:
+    if i not in res:
+      res.append(i)
+  return res
 
 if __name__ == "__main__":
   import click
