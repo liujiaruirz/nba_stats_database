@@ -50,8 +50,8 @@ body {font-family: Arial;}
 
 <div class="tab">
   <button class="tablinks" onclick="openDB(event, 'Teams')">Teams</button>
-  <button class="tablinks" onclick="openDB(event, 'Players')">Players</button>
-  <button class="tablinks" onclick="openDB(event, 'Games')">Games</button>
+  <a href="player"><button class="tablinks">Players</button></a>
+  <a href="game"><button class="tablinks">Games</button></a>
 </div>
 
 <div id="Teams" class="tabcontent">
@@ -65,11 +65,12 @@ body {font-family: Arial;}
 </div>
 
 <div id="Players" class="tabcontent">
-<p><a href="player">Go to the Player search page</a></p>
+<!-- <p><a href="player">Go to the Player search page</a></p> -->
 </div>
 
 <div id="Games" class="tabcontent">
-<p><a href="game">Go to the Game search page</a></p>
+</div>
+<!-- <p><a href="game">Go to the Game search page</a></p> -->
   <!-- <h3>Games</h3>
   <p>Input the game details you want to query:</p>
   <form>
