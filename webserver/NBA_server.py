@@ -201,10 +201,12 @@ def player():
 def player_profile():
   last_name = request.form['lname']
   if last_name != '':
-    last_name = last_name[0].upper() + last_name[1:].lower()
+    if last_name[0].islower():
+      last_name = last_name[0].upper() + last_name[1:].lower()
   first_name = request.form['fname']
   if first_name != '':
-    first_name = first_name[0].upper() + first_name[1:].lower()
+    if first_name[0].islower():
+      first_name = first_name[0].upper() + first_name[1:].lower()
   cursor_player = g.conn.execute(text("SELECT * FROM player WHERE last_name = :lname and first_name = :fname"),\
     {"lname":last_name, "fname":first_name})
   cursor_player_avg = g.conn.execute(text("SELECT AVG(height), AVG(weight), AVG(CAREER_PTS), AVG(CAREER_AST), AVG(CAREER_REB) FROM Player"))

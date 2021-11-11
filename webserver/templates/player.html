@@ -98,6 +98,9 @@
   <center><canvas id="myChart" style="width:100%;max-width:700px"></canvas></center>
 
 <script>
+function sigmoid(z) {
+  return 1 / (1 + Math.exp(-z+0.5));
+};
 var name = document.getElementById("name").innerHTML = "{{player_fname}} {{player_lname}}"
 var height = parseInt(document.getElementById("height").innerHTML = "{{player_height}}")
 var weight = parseInt(document.getElementById("weight").innerHTML = "{{player_weight}}")
@@ -116,7 +119,9 @@ var max_ast = parseFloat(document.getElementById("max_ast").innerHTML = "{{max_a
 var max_reb = parseFloat(document.getElementById("max_reb").innerHTML = "{{max_reb}}")
 
 var VERS = (pts/max_pts+ast/max_ast+reb/max_reb)*100/3;
-var POW = (height/max_height+weight/max_weight)*100/2;
+var POW = Math.min((height/max_height+weight/max_weight)*100/2 + ((height-avg_height)/max_height*100 + (weight-avg_weight)/max_weight*100)/2, 100);
+
+
 var avg_VERS = (avg_pts/max_pts+avg_ast/max_ast+avg_reb/max_reb)*100/3;
 var avg_POW = (avg_height/max_height+avg_weight/max_weight)*100/2;
 
