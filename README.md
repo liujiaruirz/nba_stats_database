@@ -1,4 +1,5 @@
-## Proposal -- Web Front of NBA Database
+**Database Account**: yh3290
+**Front-end App URL**: http://34.139.184.242:8111
 **Team Member:** Jiarui Liu, Yong Hao
 
 **Choice:** Option a, a web front end
