@@ -307,7 +307,7 @@ def player_profile():
 
 @app.route('/game', methods = ['GET'])
 def game():
-  return render_template("Game.html")
+  return render_template("game.html")
 
 @app.route('/game', methods = ['POST'])
 def game_profile():
