@@ -31,6 +31,8 @@ https://www.kaggle.com/nathanlauga/nba-games?select=ranking.csv
  - As described in Part 1, radar chart is a function in our application to measure the player's ability of based on their career stats. Here, we originate 5 different areas: PTS, AST, REB, VERS, POW, respectively standing for Scoring ability, Asisting ability, Rebound ability, Versatility, Body Strength. We calculate the values for each area based on our own algorithm. 
  - We also provide the radar chart of the average number among all players for users to make comparison.
 
+Besides, we have some other features such as team arena information and game stats query, which help users learn more about the facts of NBA. 
+
 ## Interesting Queries
 ```
 SELECT Game_ID, Home_Team_Win, year, T1.name as hteam, T2.name as ateam, home_team_score, away_team_score 
