@@ -42,6 +42,7 @@ SELECT Game_ID, Home_Team_Win, year, T1.name as hteam, T2.name as ateam, home_te
 This query returns a list of games that satisfy the given conditions (i.e., home team, away team, and season). Note that home team and away team need to be separated so we need to create two team tables T1 and T2 in the query. 
 
 ```
-SELECT Pr.first_name, Pr.last_name, MIN, PTS, AST, REB, Pr.Team_ID FROM game G, Plays Ps, Player Pr WHERE G.Game_ID = Ps.Game_ID AND Pr.Player_ID = Ps.Player_ID AND G.game_id = :gid ORDER BY PTS DESC NULLS LAST
+SELECT Pr.first_name, Pr.last_name, MIN, PTS, AST, REB, Pr.Team_ID FROM game G, Plays Ps, Player Pr 
+ WHERE G.Game_ID = Ps.Game_ID AND Pr.Player_ID = Ps.Player_ID AND G.game_id = :gid ORDER BY PTS DESC NULLS LAST
 ```
 This query selects all player's stats in a given game. Here we join three tables: Player, Plays, and Games so that we can obtain enough information.
