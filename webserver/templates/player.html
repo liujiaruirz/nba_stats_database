@@ -51,7 +51,8 @@
     <input type="submit" value="Search">
     {% if player_fname == '' or player_lname == '' %}
     <p>No player found! Please try again.</p>
-    {% endif %}
+    {% else %}
+    {% if query == true %}
     <br><br>
     <table id="myTable">
         <tr class="header">
@@ -94,9 +95,13 @@
   </form>
   <br><br>
   <br><br>
+  {% if player_height == None or player_weight == None or player_pts == None or player_ast == None or player_reb == None %}
+  <p><center>Missing information. Radar chart might be incomplete.</center></p>
+  {% endif %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
   <center><canvas id="myChart" style="width:100%;max-width:700px"></canvas></center>
-
+  {% endif %}
+  {% endif %}
 <script>
 function sigmoid(z) {
   return 1 / (1 + Math.exp(-z+0.5));
@@ -125,8 +130,8 @@ var POW = Math.min((height/max_height+weight/max_weight)*100/2 + ((height-avg_he
 var avg_VERS = (avg_pts/max_pts+avg_ast/max_ast+avg_reb/max_reb)*100/3;
 var avg_POW = (avg_height/max_height+avg_weight/max_weight)*100/2;
 
-console.log(max_reb)
-console.log(max_ast)
+// console.log(max_reb)
+// console.log(max_ast)
 // function myFunction() {
 //   var input, filter, table, tr, td, i, txtValue;
 //   input = document.getElementById("myInput");

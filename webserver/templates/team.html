@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        * {
+          box-sizing: border-box;
+        }
+        
+        #myInput {
+          background-image: url('/css/searchicon.png');
+          background-position: 10px 10px;
+          background-repeat: no-repeat;
+          width: 100%;
+          font-size: 16px;
+          padding: 12px 20px 12px 40px;
+          border: 1px solid #ddd;
+          margin-bottom: 12px;
+        }
+        
+        #myTable {
+          border-collapse: collapse;
+          width: 100%;
+          border: 1px solid #ddd;
+          font-size: 18px;
+        }
+        
+        #myTable th, #myTable td {
+          text-align: left;
+          padding: 12px;
+        }
+        
+        #myTable tr {
+          border-bottom: 1px solid #ddd;
+        }
+        
+        #myTable tr.header, #myTable tr:hover {
+          background-color: #f1f1f1;
+        }
+        </style>
+        </head>
+<body>
+<h1>{{tname}}</h1>
+  <p>Team ID: {{tid}}</p>
+  <p>Year Founded: {{year_founded}}</p>
+  <p>Head Coach: {{head_coach}}</p>
+
+<h3>{{aname}}</h3>
+    <p>City: {{city}}</p>
+    <p>State: {{state}}</p>
+    <p>Capacity: {{capacity}}</p>
+<h2>All Time Roster</h2> 
+    <table id="myTable">
+        <tr class="header">
+            <th style="width:15%;">Name</th>
+            <th style="width:10%;">Jersey</th>
+            <th style="width:10%;">Position</th>
+            <th style="width:10%;">Career Points</th>
+            <th style="width:10%;">All Star Number</th>
+
+        </tr>
+        {% for n in one_player%}
+        <tr>
+        <td>{{n[0]}} {{n[1]}}</a></td>
+        <td>{{n[2]}}</td>
+        <td>{{n[3]}}</td>
+        <td>{{n[4]}}</td>
+        <td>{{n[5]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+
+</body>
+</html>

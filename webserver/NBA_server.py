@@ -140,12 +140,6 @@ def teams():
   pname = []
   for result in cursor_player:
     pname.append(result[0]+' '+result[1])  # can also be accessed using result[0]
-    # Year_f.append(result[1])
-    # Coach.append(result[2])
-    # State.append(result[3])
-    # City.append(result[4])
-    # Capacity.append(result[5])
-    # Arena_Name.append(result[6])
 
   # names = pd.DataFrame(names, columns=['Team_ID', 'Tname', 'Year_Founded','Head_Coach','Arena_ID'])
   cursor_player.close()
@@ -185,6 +179,40 @@ def teams():
   #
   return render_template("NBA.html", **context)
 
+@app.route('/team')
+def team_info():
+  tname = request.args.get('tname')
+  team_info_cursor = g.conn.execute(text("SELECT * FROM team T, arena A WHERE T.Arena_ID = A.Arena_ID AND name = :tname"), {"tname": tname})
+  one_player_cursor = g.conn.execute(text("SELECT * FROM team T, Player P WHERE T.team_ID = P.team_ID AND name = :tname ORDER BY career_pts DESC NULLS LAST"), {"tname": tname})
+  tid = 0
+  tname = ''
+  year_founded = 0
+  head_coach = ''
+  aid = ''
+  state = ''
+  city = ''
+  capacity = 0
+  aname = ''
+  for result in team_info_cursor:
+    tid = result[0]
+    tname = result[1]
+    year_founded = result[2]
+    head_coach = result[3]
+    aid = result[4]
+    state = result[6]
+    city = result[7]
+    capacity = result[8]
+    aname = result[9]
+  team_info_cursor.close()
+
+  one_player = []
+  for result in one_player_cursor:
+    one_player.append([result[6], result[7], result[11], result[12], result[14], result[17]])
+  team_info = dict(tid = tid, tname = tname, year_founded = year_founded, head_coach = head_coach,\
+    aid = aid, state = state, city = city, capacity = capacity, aname = aname, one_player = one_player)
+  return render_template("team.html", **team_info)
+
+
 #
 # This is an example of a different path.  You can see it at:
 # 
@@ -193,6 +221,28 @@ def teams():
 # Notice that the function name is another() rather than index()
 # The functions for each app.route need to have different names
 #
+
+@app.route('/game_details')
+def game_info():
+  gid = request.args.get('gid')
+  one_player_cursor = g.conn.execute(text("SELECT Pr.first_name, Pr.last_name, MIN, PTS, AST, REB, Pr.Team_ID FROM game G, Plays Ps, Player Pr \
+    WHERE G.Game_ID = Ps.Game_ID AND Pr.Player_ID = Ps.Player_ID AND G.game_id = :gid ORDER BY PTS DESC NULLS LAST"), {"gid": gid})
+  game_cursor = g.conn.execute(text("SELECT Game_ID, T1.name as hteam, T2.name as ateam, home_team_score, \
+                                        away_team_score, year, T1.team_ID, T2.team_ID FROM Game G, team T1, team T2  \
+                                        WHERE G.home_team_ID = T1.team_ID and G.away_team_ID = T2.team_ID AND G.game_ID = :gid"),\
+                                    {"gid": gid})
+  one_player = []
+  for result in one_player_cursor:
+    one_player.append([result[0], result[1], result[2], result[3], result[4], result[5], result[6]]) # gid, hteam, ateam, hscore, ascore, year
+  one_player_cursor.close()
+  
+  one_game = []
+  for result in game_cursor:
+    one_game = [result[0], result[1], result[2], result[3], result[4], result[5], result[6], result[7]]
+  game_cursor.close()
+  info = dict(one_player = one_player, one_game = one_game)
+  return render_template("game_details.html", **info)
+
 @app.route('/player', methods = ['GET'])
 def player():
   return render_template("player.html")
@@ -225,14 +275,14 @@ def player_profile():
   for result in cursor_player:
       player_fname = str(result[1])
       player_lname = str(result[2])
-      player_dob=str(result[3])
-      player_height=float(result[4])
-      player_weight=float(result[5])
+      player_dob=result[3]
+      player_height=result[4]
+      player_weight=result[5]
       player_jersey=result[6]
       player_pos=str(result[7])
-      player_pts=float(result[9])
-      player_ast=float(result[10])
-      player_reb=float(result[11])
+      player_pts=result[9]
+      player_ast=result[10]
+      player_reb=result[11]
       player_star=result[12]
   cursor_player.close()
   for result in cursor_player_avg:
@@ -252,18 +302,23 @@ def player_profile():
   player_profile = dict(player_fname = player_fname,player_lname = player_lname, player_dob = player_dob, player_height = player_height, player_weight = player_weight,\
     player_jersey = player_jersey, player_pos = player_pos, player_pts = player_pts, player_ast = player_ast,\
       player_reb = player_reb,player_star = player_star, avg_height=avg_height, avg_weight=avg_weight, avg_pts=avg_pts, avg_ast = avg_ast, avg_reb = avg_reb,\
-        max_height = max_height, max_weight= max_weight, max_pts=max_pts, max_ast=max_ast, max_reb= max_reb)
+        max_height = max_height, max_weight= max_weight, max_pts=max_pts, max_ast=max_ast, max_reb= max_reb, query = True)
   return render_template("player.html", **player_profile)
 
 @app.route('/game', methods = ['GET'])
 def game():
-  return render_template("game.html")
+  return render_template("Game.html")
 
 @app.route('/game', methods = ['POST'])
 def game_profile():
   year = request.form['year']
   hteam = request.form['hteam']
   ateam = request.form['ateam']
+  trick = False
+  if year == '' or hteam == '' or ateam == '':
+    trick = True
+    game_profile = dict(trick = trick)
+    return render_template("game.html", **game_profile)
   cursor_game = g.conn.execute(text("SELECT Game_ID, Home_Team_Win, year, T1.name as hteam, T2.name as ateam, home_team_score, \
                                         away_team_score FROM Game G, team T1, team T2  \
                                         WHERE G.home_team_ID = T1.team_ID and G.away_team_ID = T2.team_ID and T1.name = :hteam\
@@ -277,7 +332,7 @@ def game_profile():
   # ateam = []
   # home_team_score = []
   # away_team_score = []
-
+  noReturn = False
   for result in cursor_game:
     Game_ID = result[0]
     hteam = result[3]
@@ -291,8 +346,11 @@ def game_profile():
     away_team_score = result[6]
     one_game.append([Game_ID, season, hteam, ateam, winner, home_team_score, away_team_score])
   cursor_game.close()
+  # print(one_game)
+  if one_game == []:
+    noReturn = True
   # game_profile = dict(Game_ID = Game_ID, winner = winner, season = season, hteam = hteam, ateam = ateam, home_team_score = home_team_score, away_team_score = away_team_score)
-  game_profile = dict(one_game = one_game)
+  game_profile = dict(one_game = one_game, query = True, noReturn = noReturn)
   return render_template("game.html", **game_profile)
 
 

@@ -52,6 +52,13 @@
     <input type="text" id="ateam" name="ateam"><br><br>
     <input type="submit" value="Search">
     <br><br>
+    {% if trick == true %}
+    <p>Invalid query!</p>
+    {%else%}
+    {% if noReturn == true %}
+    <p>No game record found. Please try again.</p>
+    {%else%}
+    {% if query == true %}
     <table id="myTable">
         <tr class="header">
             <th style="width:10%;">Game ID</th>
@@ -64,7 +71,7 @@
         </tr>
         {% for n in one_game%}
         <tr>
-        <td><a href = /game/{{n[0]}}>{{n[0]}}</a></td>
+        <td><a href = /game_details?gid={{n[0]}}>{{n[0]}}</a></td>
         <td>{{n[1]}}</td>
         <td>{{n[2]}}</td>
         <td>{{n[3]}}</td>
@@ -73,39 +80,14 @@
         <td>{{n[6]}}</td>
         </tr>
         {% endfor %}
-        <!-- <tr>
-        <td>Berglunds snabbkop</td>
-        <td>Sweden</td>
-        </tr>
-        <tr>
-        <td>Island Trading</td>
-        <td>UK</td>
-        </tr>
-        <tr>
-        <td>Koniglich Essen</td>
-        <td>Germany</td>
-        </tr>
-        <tr>
-        <td>Laughing Bacchus Winecellars</td>
-        <td>Canada</td>
-        </tr>
-        <tr>
-        <td>Magazzini Alimentari Riuniti</td>
-        <td>Italy</td>
-        </tr>
-        <tr>
-        <td>North/South</td>
-        <td>UK</td>
-        </tr>
-        <tr>
-        <td>Paris specialites</td>
-        <td>France</td>
-        </tr> -->
     </table>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+
   </form>
 
 <script>
-
 function myFunction() {
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("myInput");
