@@ -40,7 +40,7 @@ SELECT Game_ID, Home_Team_Win, year, T1.name as hteam, T2.name as ateam, home_te
        WHERE G.home_team_ID = T1.team_ID AND G.away_team_ID = T2.team_ID 
              AND T1.name = :hteam and T2.name = :ateam and year = :year
 ```
-This query returns a list of games that satisfy the given conditions (i.e., home team, away team, and season). Note that home team and away team need to be selected from two separating team tables (T1 and T2). 
+This query returns a list of games that satisfy the given conditions (i.e., home team, away team, and season). Note that home team and away team need to be selected from two separate team tables (T1 and T2). 
 
 ```
 SELECT Pr.first_name, Pr.last_name, MIN, PTS, AST, REB, Pr.Team_ID 
