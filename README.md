@@ -49,4 +49,4 @@ SELECT Pr.first_name, Pr.last_name, MIN, PTS, AST, REB, Pr.Team_ID
        WHERE G.Game_ID = Ps.Game_ID AND Pr.Player_ID = Ps.Player_ID AND G.Game_id = :gid 
        ORDER BY PTS DESC NULLS LAST
 ```
-This query statement is used in the game detail page. It selects all player's stats in a given game specified by Game_ID. Here we join three tables: _player_, _plays_, and _games_. In _player_ table, we achieve the information of player's full name. In _plays_ table, we obtain the player's stats such as MIN and PTS. And finally, we locate the game by Game_ID of _game_.
+This query statement is used in the game detail page. It selects all player's stats in a given game specified by Game_ID. Here we join three tables: _player_, _plays_, and _games_. In _player_ table, we achieve the information of player's full name. In _plays_ table, we obtain the player's stats such as MIN and PTS. And finally, we locate the game by Game_ID of the _game_ table.
