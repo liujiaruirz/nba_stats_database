@@ -318,10 +318,11 @@ def game_profile():
   hteam = request.form['hteam']
   ateam = request.form['ateam']
   trick = False
-  if year == '' or hteam == '' or ateam == '':
+  if year == '' or hteam == '' or ateam == '' or len(year) < 4 or not year.isdigit():
     trick = True
     game_profile = dict(trick = trick)
     return render_template("game.html", **game_profile)
+  year = year[:4]
   cursor_game = g.conn.execute(text("SELECT Game_ID, Home_Team_Win, year, T1.name as hteam, T2.name as ateam, home_team_score, \
                                         away_team_score FROM Game G, team T1, team T2  \
                                         WHERE G.home_team_ID = T1.team_ID and G.away_team_ID = T2.team_ID and T1.name = :hteam\

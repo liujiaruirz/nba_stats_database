@@ -42,7 +42,7 @@
 <body>
 
 <h2>NBA Games since Season 1946</h2>
-  <p>Input the games you want to learn about:</p>
+  <p>Input the games you want to learn about (e.g., 2016, Lakers, Nets):</p>
   <form method = 'POST' action = "/game">
     <label for="year">Game season:</label>
     <input type="integer" id="year" name="year"><br><br>
@@ -50,6 +50,7 @@
     <input type="text" id="hteam" name="hteam"><br><br>
     <label for="ateam">Away Team:</label>
     <input type="text" id="ateam" name="ateam"><br><br>
+    </table>
     <input type="submit" value="Search">
     <a href="/">Back to main page</a>
     <br><br>
