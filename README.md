@@ -14,6 +14,8 @@ Users can achieve the statistics of all NBA players and teams. Records can also 
 
 The featured function of the application is to help users achieve data views in a more intuitive way – users can get the “radar chart” of a player that they are interested in. On top of that, users can choose specific perspectives to generate the radar chart they need and do the comparison.
 
+_(Please see Features for the functions we have not implement.)_
+
 ## Data Source
 
 We plan to combine these two Kaggle dataset and form our own database.
@@ -26,6 +28,7 @@ https://www.kaggle.com/nathanlauga/nba-games?select=ranking.csv
 
 1. The all-time roster of a team. 
  - In the team detail pages, users can obtain a list of ALL players who once played for the team with their jersey numbers, positions, etc. 
+ - However, player's contract was not implemented because we could not find any open dataset that records such infomation.
 
 2. The Radar Chart.
  - As described in Part 1, radar chart is a function in our application to measure the player's abilities of based on their career stats. Here, we originate 5 different areas: PTS, AST, REB, VERS, POW, respectively standing for Scoring Ability, Asisting Ability, Rebound Ability, Versatility, and Body Strength. We calculate the values for each area based on our self-designed algorithm. 
