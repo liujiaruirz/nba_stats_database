@@ -1,8 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 # NBA Database - Project2
 
 **Database Account**: yh3290
