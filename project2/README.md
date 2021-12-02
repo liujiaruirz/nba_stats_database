@@ -7,12 +7,12 @@
 **Team Members:** Jiarui Liu (jl6007), Yong Hao (yh3290)
 
 ## Description
-1. Create composite types.
-Add **Full_Name** as a new composite type in player table to replace the old **First_Name** and **Last_Name**. Use one composite type to represent name. So you can either treat them as whole or seperately.
-2. Add arrays.
-Add **Career_Stats** as array type in player table to replace the old **Career_PTS**, **Career_AST** and **Career_REB**. Use array to represent player's career contribute, which provide more scalability. You can easily add like Block or Steal for every player.
-3. Add trigger.
-Add trigger function **if_roll_back()** and trigger **check_player_del**. This trigger will make sure every team at least has one player. If you want to delete all players in a team, it will stop. Make sure the at least one player constrain of the team.
+#### 1. Create composite types.
+Add **Full_Name** as a new composite type in _Player_ table to replace the old **First_Name** and **Last_Name**. We use the composite type to represent the name attribute, so users can either treat first and last name as a whole or seperately.
+#### 2. Add arrays.
+Add **Career_Stats** as an array type in _Player_ table to replace the old **Career_PTS**, **Career_AST** and **Career_REB**. The array type provides extendibility to player's career stats, which means we can easily populate the _Player_ table with more stats attributes like _Block_ or _Steal_ in the future.
+#### 3. Add trigger.
+Add trigger function **if_roll_back()** and trigger **check_player_del**. This trigger enforces the total-participation constraint of _Team_ by asserting that every team has at least one player. If one tries to delete all players in a certain team, the command will stop before the last selected player's record.
 
 ## Schema Modification Commands
 Please note that we have created a new table called _New_Player_ to replace the old _Player_ table, to show the composite types and arrays features.
@@ -75,4 +75,6 @@ A player who has a 20(PTS)+5(AST)+5(REB) stats is considered all-around. Here, t
 DELETE FROM New_Player
 WHERE team_id = 1610612738;
 ```
-This query tries to delete all players of Celtics. The trigger we set will ensure at least one player for every team. Therefore, there is still going to be one player left in the returned _New_Player_ table.
+This query tries to delete all players of the team Celtics. Since the trigger we set ensures at least one player for each team, there is still going to be one Celtics player left in the returned _New_Player_ table.
+
+(Since we have run this query during testing, there is only one Celtics player record left in _New_Player_ now. Therefore, for the second (and future) runs, the query will return "DELETE 0", meaning that no record has been deleted. This corresponds to our implementation.)
