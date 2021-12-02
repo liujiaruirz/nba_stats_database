@@ -1,18 +1,25 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # NBA Database - Project2
 
 **Database Account**: yh3290
 
-**Web Front-End App URL: http://34.139.184.252:8111/**
+**Web Front-End App URL**: http://34.139.184.252:8111/
 
-**Team Members:** Jiarui Liu (jl6007), Yong Hao (yh3290)
+**Team Members:** Jerry Liu (jl6007), Yong Hao (yh3290)
 
 ## Description
 #### 1. Create composite types.
 Add **Full_Name** as a new composite type in _Player_ table to replace the old **First_Name** and **Last_Name**. We use the composite type to represent the name attribute, so users can either treat first and last name as a whole or seperately.
+
 #### 2. Add arrays.
 Add **Career_Stats** as an array type in _Player_ table to replace the old **Career_PTS**, **Career_AST** and **Career_REB**. The array type provides extendibility to player's career stats, which means we can easily populate the _Player_ table with more stats attributes like _Block_ or _Steal_ in the future.
+
 #### 3. Add trigger.
-Add trigger function **if_roll_back()** and trigger **check_player_del**. This trigger enforces the total-participation constraint of _Team_ by asserting that every team has at least one player. If one tries to delete all players in a certain team, the command will stop before the last selected player's record.
+Add trigger function **if_roll_back()** and trigger **check_player_del**. This trigger enforces the $\geq$ 1 participation constraint of _Team_ by asserting that every team has at least one player. If one tries to delete all players in a certain team, the command will stop before the last selected player's record.
 
 ## Schema Modification Commands
 Please note that we have created a new table called _New_Player_ to replace the old _Player_ table, to show the composite types and arrays features.
@@ -22,6 +29,7 @@ First_Name VARCHAR(30),
 Last_Name VARCHAR(30)
 );
 ```
+
 ```sql
 CREATE TABLE New_Player (
 	Player_ID INTEGER,
@@ -55,7 +63,7 @@ CREATE OR REPLACE FUNCTION if_roll_back() RETURNS TRIGGER AS $example_table$
    END;
 $example_table$ LANGUAGE plpgsql;
 ```
-## Interesting Queries
+## Queries
 1.
 ```sql
 SELECT COUNT(*) FROM New_Player
