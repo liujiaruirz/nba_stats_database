@@ -4,7 +4,7 @@
 
 **Web Front-End App URL: http://34.139.184.252:8111/**
 
-**Team Members:** Jiarui Liu, Yong Hao
+**Team Members:** Jiarui Liu (jl6007), Yong Hao (yh3290)
 
 ## Description
 1. Create composite types.
@@ -21,19 +21,19 @@ First_Name VARCHAR(30),
 Last_Name VARCHAR(30)
 );
 
-CREATE TABLE aNew_Player (
+CREATE TABLE New_Player (
 	Player_ID INTEGER,
-Name Full_Name,
-Date_Birth DATE,
-Height INTEGER,
-Weight INTEGER,
-Jersey INTEGER,
-Position CHARACTER(30),
-Team_ID INTEGER,
-CAREER_STATS DECIMAL [],
-ALL_STAR_NUM INTEGER,
-PRIMARY KEY (Player_ID),
-FOREIGN KEY (Team_ID) REFERENCES Team
+	Name Full_Name,
+	Date_Birth DATE,
+	Height INTEGER,
+	Weight INTEGER,
+	Jersey INTEGER,
+	Position CHARACTER(30),
+	Team_ID INTEGER,
+	CAREER_STATS DECIMAL [],
+	ALL_STAR_NUM INTEGER,
+	PRIMARY KEY (Player_ID),
+	FOREIGN KEY (Team_ID) REFERENCES Team
 );
 
 CREATE TRIGGER check_player_del
