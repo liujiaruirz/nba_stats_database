@@ -77,4 +77,4 @@ WHERE team_id = 1610612738;
 ```
 This query tries to delete all players of the team Celtics. Since the trigger we set ensures at least one player for each team, there is still going to be one Celtics player left in the returned _New_Player_ table.
 
-(Since we have run this query during testing, there is only one Celtics player record left in _New_Player_ now. Therefore, for the second (and future) runs, the query will return "DELETE 0", meaning that no record has been deleted. This corresponds to our implementation.)
+(Since we have run this query during testing, there is only one Celtics player record left in _New_Player_ now. Therefore, for the second (and future) runs, the query will return "DELETE 0", meaning that no record has been deleted. This corresponds to our implementation. To test the deletion with more than one records, use other teams, e.g., team_id = 1610612737 or team_id = 1610612739)
