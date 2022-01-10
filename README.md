@@ -1,11 +1,5 @@
 # NBA Database
 
-**Database Account**: yh3290
-
-**Web Front-End App URL: http://34.139.184.252:8111/**
-
-**Team Members:** Jiarui Liu, Yong Hao
-
 ## Description
 
 A Python application that operates the NBA database through a simple web front end. The database is designed to serve NBA fans, scouts, data analysts, etc., to help them compare players and analyze games throughout multiple seasons. 
@@ -37,7 +31,7 @@ https://www.kaggle.com/nathanlauga/nba-games?select=ranking.csv
 
 Besides, we have some other features such as team arena information and game stats query, which help users learn more about the facts of NBA. 
 
-## Interesting Queries
+## Featured Queries
 ```
 SELECT Game_ID, Home_Team_Win, year, T1.name as hteam, T2.name as ateam, home_team_score, away_team_score 
        FROM Game G, team T1, team T2 
